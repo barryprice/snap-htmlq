@@ -1,0 +1,26 @@
+name: htmlq
+title: htmlq
+summary: Like jq, but for HTML. 
+description: |
+  Like jq, but for HTML. Uses CSS selectors to extract bits of content from HTML files.
+license: MIT
+
+adopt-info: htmlq
+confinement: strict
+grade: stable
+base: core20
+
+apps:
+  htmlq:
+    command: bin/htmlq
+
+parts:
+  htmlq:
+    plugin: rust
+    source: https://github.com/mgdm/htmlq.git
+    override-build: |
+      # build the latest tagged release
+      latest_tag=$(git tag --list | grep '^v' | tail -1)
+      git checkout ${latest_tag?}
+      snapcraftctl set-version $(git describe --tags)
+      snapcraftctl build
