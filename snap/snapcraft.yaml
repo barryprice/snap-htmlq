@@ -8,7 +8,7 @@ license: MIT
 adopt-info: htmlq
 confinement: strict
 grade: stable
-base: core20
+base: core22
 
 apps:
   htmlq:
@@ -18,6 +18,7 @@ parts:
   htmlq:
     plugin: rust
     source: https://github.com/mgdm/htmlq.git
+    build-packages: [cargo, rustc]
     override-build: |
       # build the latest tagged release
       latest_tag=$(git tag --list | grep '^v' | tail -1)
