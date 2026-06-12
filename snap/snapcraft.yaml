@@ -8,7 +8,7 @@ license: MIT
 adopt-info: htmlq
 confinement: strict
 grade: stable
-base: core22
+base: core26
 
 apps:
   htmlq:
@@ -17,11 +17,12 @@ apps:
 parts:
   htmlq:
     plugin: rust
+    rust-channel: stable
     source: https://github.com/mgdm/htmlq.git
     build-packages: [cargo, rustc]
     override-build: |
       # build the latest tagged release
       latest_tag=$(git tag --list | grep '^v' | tail -1)
       git checkout ${latest_tag?}
-      snapcraftctl set-version $(git describe --tags)
-      snapcraftctl build
+      craftctl set version=$(git describe --tags)
+      craftctl default
