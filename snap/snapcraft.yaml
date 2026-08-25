@@ -5,6 +5,15 @@ description: |
   Like jq, but for HTML. Uses CSS selectors to extract bits of content from HTML files.
 license: MIT
 
+contact:
+  - https://github.com/barryprice
+issues:
+  - https://github.com/barryprice/snap-htmlq/issues
+source-code:
+  - https://github.com/mgdm/htmlq
+website:
+  - https://github.com/mgdm/htmlq
+
 adopt-info: htmlq
 confinement: strict
 grade: stable
@@ -21,8 +30,10 @@ parts:
     source: https://github.com/mgdm/htmlq.git
     build-packages: [cargo, rustc]
     override-build: |
-      # build the latest tagged release
-      latest_tag=$(git tag --list | grep '^v' | tail -1)
-      git checkout ${latest_tag?}
-      craftctl set version=$(git describe --tags)
+      # Pinned upstream release tag. Renovate bumps this line automatically
+      # when mgdm/htmlq publishes a new release (see renovate.json).
+      # renovate: datasource=github-releases depName=mgdm/htmlq
+      htmlq_version="v0.4.0"
+      git checkout "${htmlq_version}"
+      craftctl set version="${htmlq_version#v}"
       craftctl default
